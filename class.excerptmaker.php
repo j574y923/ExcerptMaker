@@ -73,7 +73,14 @@ class ExcerptMaker
 	 * @var array
 	 */
 	private $ExcerptAfterStringArray = [];
-
+	
+	/**
+	 * Get a reduced version of ExcerptAfterString representing first $ExcerptSize words past $IndexMatch. 
+	 *
+	 * @var string
+	 */
+	private $ExcerptAfterStringPastFirstIndex = '';
+    
 	/**
 	 * The stored excerpt one. Get this!
 	 *
@@ -105,8 +112,18 @@ class ExcerptMaker
 		$this->SearchTermsArrayFlag = true;
 
 		$this->MakeOneExcerpt();
+		//rearrange some variables and prepare for the next excerpt...
 		$this->Excerpt2 = $this->Excerpt1;
+		$this->Excerpt1 = '';
+		$text_temp = $this->Text;
+		$this->Text = substr($this->Text, $this->IndexMatch + strlen($this->ExcerptAfterStringPastFirstIndex), strlen($this->Text));
 		$this->MakeOneExcerpt();
+        		
+		//rearrange variables so they make sense again
+		$this->Text = $text_temp;
+		$excerpt_temp = $this->Excerpt1;
+		$this->Excerpt1 = $this->Excerpt2;
+		$this->Excerpt2 = $excerpt_temp;
 	}
 
 	/**
@@ -121,7 +138,11 @@ class ExcerptMaker
 
 		//1. regex match to get $IndexMatch.
 		preg_match('/\b('.implode('|', $this->SearchTermsArray).')\b/i', $this->Text, $matches, PREG_OFFSET_CAPTURE);
-
+		
+        //no matches, no index
+		if(empty($matches[0][1])) {
+			return;
+		}
 		$this->IndexMatch = $matches[0][1];
 
 		//2. split string at $IndexMatch
@@ -144,11 +165,11 @@ class ExcerptMaker
 		} else {
 			$ellipses_ending = '...';
 		}
-		$excerpt_temp = 
+		$this->ExcerptAfterStringPastFirstIndex = 
 			implode(' ', array_slice($this->ExcerptAfterStringArray, 0, min($this->ExcerptSize + 1, count($this->ExcerptAfterStringArray)))) . $ellipses_ending;
 
 		//4. Form excerpt
-		$this->Excerpt1 .= $excerpt_temp;
+		$this->Excerpt1 .= $this->ExcerptAfterStringPastFirstIndex;
 
 	}
 }
