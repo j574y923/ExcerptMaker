@@ -65,14 +65,14 @@ class ExcerptMaker
 	 *
 	 * @var array
 	 */
-	private $ExcerptBeforeStringArray = []];
+	private $ExcerptBeforeStringArray = [];
 
 	/**
 	 * after string to array
 	 *
 	 * @var array
 	 */
-	private $ExcerptAfterStringArray = []];
+	private $ExcerptAfterStringArray = [];
 
 	/**
 	 * The stored excerpt one. Get this!
@@ -145,7 +145,7 @@ class ExcerptMaker
 			$ellipses_ending = '...';
 		}
 		$excerpt_temp = 
-			implode(' ', array_slice($ExcerptAfterStringArray, 0, min($ExcerptSize + 1, count($ExcerptAfterStringArray))) . $ellipses_ending;
+			implode(' ', array_slice($ExcerptAfterStringArray, 0, min($ExcerptSize + 1, count($ExcerptAfterStringArray)))) . $ellipses_ending;
 
 		//4. Form excerpt
 		$Excerpt1 .= $excerpt_temp;
