@@ -93,7 +93,7 @@ class ExcerptMaker
 	 *
 	 * @var int
 	 */
-	public $ExcerptSize = '8';
+	public $ExcerptSize = 8;
 
 	/**
 	 * Make two excerpts given $Text, and $SearchTermsString.
@@ -120,7 +120,7 @@ class ExcerptMaker
 		}
 
 		//1. regex match to get $IndexMatch.
-		preg_match_all('/\b('.implode('|', $this->SearchTermsArray).')\b/i', $this->Text, $matches, PREG_OFFSET_CAPTURE);
+		preg_match('/\b('.implode('|', $this->SearchTermsArray).')\b/i', $this->Text, $matches, PREG_OFFSET_CAPTURE);
 
 		$this->IndexMatch = $matches[0][1];
 
