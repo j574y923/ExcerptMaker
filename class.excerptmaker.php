@@ -104,9 +104,9 @@ class ExcerptMaker
 		$this->SearchTermsArray = explode(' ', $this->SearchTermsString);
 		$this->SearchTermsArrayFlag = true;
 
-		MakeOneExcerpt();
+		$this->MakeOneExcerpt();
 		$this->Excerpt2 = $this->Excerpt1;
-		MakeOneExcerpt();
+		$this->MakeOneExcerpt();
 	}
 
 	/**
