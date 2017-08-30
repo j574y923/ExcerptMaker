@@ -101,11 +101,11 @@ class ExcerptMaker
 	 */
 	public function MakeTwoExcerpts() 
 	{
-		$SearchTermsArray = explode(' ', $SearchTermsString);
-		$SearchTermsArrayFlag = true;
+		$this->SearchTermsArray = explode(' ', $this->SearchTermsString);
+		$this->SearchTermsArrayFlag = true;
 
 		MakeOneExcerpt();
-		$Excerpt2 = $Excerpt1;
+		$this->Excerpt2 = $this->Excerpt1;
 		MakeOneExcerpt();
 	}
 
@@ -115,40 +115,40 @@ class ExcerptMaker
 	 */
 	public function MakeOneExcerpt() 
 	{
-		if($SearchTermsArrayFlag === false) {
-			$SearchTermsArray = explode(' ', $SearchTermsString);
+		if($this->SearchTermsArrayFlag === false) {
+			$this->SearchTermsArray = explode(' ', $this->SearchTermsString);
 		}
 
 		//1. regex match to get $IndexMatch.
-		preg_match_all('/\b('.implode('|', $SearchTermsArray).')\b/i', $Text, $matches, PREG_OFFSET_CAPTURE);
+		preg_match_all('/\b('.implode('|', $this->SearchTermsArray).')\b/i', $this->Text, $matches, PREG_OFFSET_CAPTURE);
 
-		$IndexMatch = $matches[0][1];
+		$this->IndexMatch = $matches[0][1];
 
 		//2. split string at $IndexMatch
-		$ExcerptBeforeString = substr($Text, 0, $IndexMatch);
-		$ExcerptAfterString = substr($Text, $IndexMatch, strlen($Text));
+		$this->ExcerptBeforeString = substr($this->Text, 0, $this->IndexMatch);
+		$this->ExcerptAfterString = substr($this->Text, $this->IndexMatch, strlen($this->Text));
 
 		//3. get the last 8 words of before string, get the first 9 words of the after string
-		$ExcerptBeforeStringArray = explode(' ', $ExcerptBeforeString);
-		if(count($ExcerptBeforeStringArray) <= $ExcerptSize) {
+		$this->ExcerptBeforeStringArray = explode(' ', $this->ExcerptBeforeString);
+		if(count($this->ExcerptBeforeStringArray) <= $this->ExcerptSize) {
 			$ellipses_beginning = '';
 		} else {
 			$ellipses_beginning = '...';
 		}
-		$Excerpt1 = $ellipses_beginning .  
-			implode(' ', array_slice($ExcerptBeforeStringArray, max(0, count($ExcerptBeforeStringArray) - $ExcerptSize), count($ExcerptBeforeStringArray)));
+		$this->Excerpt1 = $ellipses_beginning .  
+			implode(' ', array_slice($this->ExcerptBeforeStringArray, max(0, count($this->ExcerptBeforeStringArray) - $this->ExcerptSize), count($this->ExcerptBeforeStringArray)));
 
-		$ExcerptAfterStringArray = explode(' ', $ExcerptAfterString);
-		if(count($ExcerptAfterStringArray) <= $ExcerptSize + 1) {
+		$this->ExcerptAfterStringArray = explode(' ', $this->ExcerptAfterString);
+		if(count($this->ExcerptAfterStringArray) <= $this->ExcerptSize + 1) {
 			$ellipses_ending = '';
 		} else {
 			$ellipses_ending = '...';
 		}
 		$excerpt_temp = 
-			implode(' ', array_slice($ExcerptAfterStringArray, 0, min($ExcerptSize + 1, count($ExcerptAfterStringArray)))) . $ellipses_ending;
+			implode(' ', array_slice($this->ExcerptAfterStringArray, 0, min($this->ExcerptSize + 1, count($this->ExcerptAfterStringArray)))) . $ellipses_ending;
 
 		//4. Form excerpt
-		$Excerpt1 .= $excerpt_temp;
+		$this->Excerpt1 .= $excerpt_temp;
 
 	}
 }
