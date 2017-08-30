@@ -30,7 +30,7 @@ class ExcerptMaker
 	 *
 	 * @var array
 	 */
-	public $SearchTermsArray = [];
+	public $SearchTermsArray = null;
 
 	/** 
 	 * Flag to check if $SearchTermsArray is set...  
@@ -65,14 +65,14 @@ class ExcerptMaker
 	 *
 	 * @var array
 	 */
-	private $ExcerptBeforeStringArray = [];
+	private $ExcerptBeforeStringArray = null;
 
 	/**
 	 * after string to array
 	 *
 	 * @var array
 	 */
-	private $ExcerptAfterStringArray = [];
+	private $ExcerptAfterStringArray = null;
 	
 	/**
 	 * Get a reduced version of ExcerptAfterString representing first $ExcerptSize words past $IndexMatch. 
